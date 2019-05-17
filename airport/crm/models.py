@@ -19,7 +19,6 @@ class Flight(models.Model):
     plane_name = models.ForeignKey(
         'Plane',
         on_delete=models.CASCADE,
-        related_name="flights"
     )
     status = models.CharField(
         max_length=2,
@@ -29,11 +28,11 @@ class Flight(models.Model):
     is_departure = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{0}'.format(self.flight_id)
+        return self.flight_id
 
 
 class Plane(models.Model):
     name = models.CharField(max_length=10)
 
     def __str__(self):
-        return '{0}'.format(self.name)
+        return self.name
