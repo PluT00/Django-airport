@@ -11,7 +11,7 @@ class Flight(models.Model):
         ('DP', 'Departure')
     )
     departure_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    flight_id = models.CharField(max_length=10)
+    flight_id = models.CharField(max_length=10, unique=True)
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     arrival_time = models.DateTimeField(auto_now=False, auto_now_add=False)
@@ -29,6 +29,9 @@ class Flight(models.Model):
 
     def __str__(self):
         return self.flight_id
+
+    class Meta:
+        ordering = ['-departure_time']
 
 
 class Plane(models.Model):
