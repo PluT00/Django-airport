@@ -3,12 +3,12 @@ from django.db import models
 
 class Flight(models.Model):
     STATUS_CHOISES = (
-        ('RG', 'Registration'),
-        ('OW', 'On the way'),
-        ('DL', 'Delayed'),
-        ('CN', 'Canceled'),
-        ('AR', 'Arrived'),
-        ('DP', 'Departure')
+        ('Registration', 'Registration'),
+        ('On the way', 'On the way'),
+        ('Delayed', 'Delayed'),
+        ('Canceled', 'Canceled'),
+        ('Arrived', 'Arrived'),
+        ('Departure', 'Departure')
     )
     departure_time = models.DateTimeField(auto_now=False, auto_now_add=False)
     flight_id = models.CharField(max_length=10, unique=True)
@@ -21,9 +21,9 @@ class Flight(models.Model):
         on_delete=models.CASCADE,
     )
     status = models.CharField(
-        max_length=2,
+        max_length=12,
         choices=STATUS_CHOISES,
-        default='RG'
+        default='Registration'
     )
     is_departure = models.BooleanField(default=True)
 

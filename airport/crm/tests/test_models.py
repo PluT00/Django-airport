@@ -16,7 +16,7 @@ class FlightModelTestCase(TestCase):
             arrival_time = timezone.now(),
             company = "S7",
             plane_name = self.plane,
-            status = "RG"
+            status = "Registration"
         )
 
     def test_direction_time_auto_now(self):
@@ -57,23 +57,23 @@ class FlightModelTestCase(TestCase):
 
     def test_status_max_length(self):
         max_length = self.flight._meta.get_field('status').max_length
-        self.assertEqual(max_length, 2)
+        self.assertEqual(max_length, 12)
 
     def test_status_choices(self):
         STATUS_CHOISES = (
-            ('RG', 'Registration'),
-            ('OW', 'On the way'),
-            ('DL', 'Delayed'),
-            ('CN', 'Canceled'),
-            ('AR', 'Arrived'),
-            ('DP', 'Departure')
+            ('Registration', 'Registration'),
+            ('On the way', 'On the way'),
+            ('Delayed', 'Delayed'),
+            ('Canceled', 'Canceled'),
+            ('Arrived', 'Arrived'),
+            ('Departure', 'Departure')
         )
         choices = self.flight._meta.get_field('status').choices
         self.assertEqual(choices, STATUS_CHOISES)
 
     def test_status_default(self):
         default = self.flight._meta.get_field('status').default
-        self.assertEqual(default, 'RG')
+        self.assertEqual(default, 'Registration')
 
     def test_is_departure_default(self):
         default = self.flight._meta.get_field('is_departure').default
