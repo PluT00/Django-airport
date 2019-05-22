@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Details of {{ flight.flight_id }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid w-50">
+    <div class="row">
+      <div class="col">Departure time:</div>
+      <div class="col">{{ flight.departure_time }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Flight id:</div>
+      <div class="col">{{ flight.flight_id }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Country:</div>
+      <div class="col">{{ flight.country }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">City:</div>
+      <div class="col">{{ flight.city }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Arrival time:</div>
+      <div class="col">{{ flight.arrival_time }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Company:</div>
+      <div class="col">{{ flight.company }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Plane type:</div>
+      <div class="col">{{ flight.plane_name }}</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">Status:</div>
+      <div class="col">{{ flight.status }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><a href="#" class="btn btn-outline-info">Book a ticket</a></div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Main page | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-departures-tab" data-toggle="pill" href="#pills-departures" role="tab" aria-controls="pills-departures" aria-selected="true">Departures</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-arrivals-tab" data-toggle="pill" href="#pills-arrivals" role="tab" aria-controls="pills-arrivals" aria-selected="false">Arrivals</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-departures" role="tabpanel" aria-labelledby="pills-departures-tab">
+      <table class="table">
+        <thead>
+          <th scope="col">Departure time</th>
+          <th scope="col">Id</th>
+          <th scope="col">City</th>
+          <th scope="col">Plane</th>
+          <th scope="col">Status</th>
+          <th scope="col">Details</th>
+        </thead>
+        <tbody>
+          {% for flight in departures %}
+            <tr>
+              <td>{{ flight.departure_time }}</td>
+              <td>{{ flight.flight_id }}</td>
+              <td>{{ flight.city }}</td>
+              <td>{{ flight.plane_name }}</td>
+              <td>{{ flight.status }}</td>
+              <td><a href="{{ flight.get_absolute_url }}" class="btn btn-outline-secondary">Details</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="pills-arrivals" role="tabpanel" aria-labelledby="pills-arrivals-tab">
+      <table class="table">
+        <thead>
+          <th scope="col">Departure time</th>
+          <th scope="col">Id</th>
+          <th scope="col">City</th>
+          <th scope="col">Plane</th>
+          <th scope="col">Status</th>
+          <th scope="col">Details</th>
+        </thead>
+        <tbody>
+          {% for flight in arrivals %}
+            <tr>
+              <td>{{ flight.departure_time }}</td>
+              <td>{{ flight.flight_id }}</td>
+              <td>{{ flight.city }}</td>
+              <td>{{ flight.plane_name }}</td>
+              <td>{{ flight.status }}</td>
+              <td><a href="{{ flight.get_absolute_url }}" class="btn btn-outline-secondary">Details</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </div>
+{% endblock %}
