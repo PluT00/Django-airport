@@ -39,6 +39,10 @@ class FlightModelTestCase(TestCase):
         max_length = self.flight._meta.get_field('flight_id').max_length
         self.assertEqual(max_length, 10)
 
+    def test_flight_id_unique(self):
+        unique = self.flight._meta.get_field('flight_id').unique
+        self.assertEqual(unique, True)
+
     def test_country_max_length(self):
         max_length = self.flight._meta.get_field('country').max_length
         self.assertEqual(max_length, 100)
@@ -78,6 +82,31 @@ class FlightModelTestCase(TestCase):
     def test_is_departure_default(self):
         default = self.flight._meta.get_field('is_departure').default
         self.assertEqual(default, True)
+
+    def test_slug_max_length(self):
+        max_length = self.flight._meta.get_field('slug').max_length
+        self.assertEqual(max_length, 10)
+
+    def test_slug_unique(self):
+        unique = self.flight._meta.get_field('slug').unique
+        self.assertEqual(unique, True)
+
+    def test_slug_blank(self):
+        blank = self.flight._meta.get_field('slug').blank
+        self.assertEqual(blank, True)
+
+    def test_slug_null(self):
+        null = self.flight._meta.get_field('slug').null
+        self.assertEqual(null, False)
+
+    def test_slug_get_absolute_url(self):
+        self.assertEqual(
+            self.flight.get_absolute_url(),
+            '/flight/{0}/'.format(self.flight.slug)
+        )
+
+    def test_slug__str__(self):
+        self.assertEqual(self.flight.__str__(), self.flight.flight_id)
 
 
 class PlaneModelTestCase(TestCase):
