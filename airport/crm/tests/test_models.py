@@ -117,3 +117,7 @@ class PlaneModelTestCase(TestCase):
     def test_name_max_length(self):
         max_length = self.plane._meta.get_field('name').max_length
         self.assertEqual(max_length, 10)
+
+    def test_seats_default(self):
+        default = self.plane._meta.get_field('seats').default
+        self.assertEqual(default, 120)
