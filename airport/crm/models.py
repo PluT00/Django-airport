@@ -49,6 +49,7 @@ class Flight(models.Model):
 
 class Plane(models.Model):
     name = models.CharField(max_length=10)
+    seats = models.IntegerField(default=120)
 
     def __str__(self):
         return self.name
