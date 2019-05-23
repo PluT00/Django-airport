@@ -3,6 +3,17 @@ from crm.models import Flight, Plane
 
 
 class FlightAdmin(admin.ModelAdmin):
+    fields = [
+        'flight_id',
+        'departure_time',
+        'arrival_time',
+        'country',
+        'city',
+        'company',
+        'plane_name',
+        'status',
+        'is_departure'
+    ]
     list_display = [
         'flight_id',
         'departure_time',
