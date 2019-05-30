@@ -1,5 +1,5 @@
 from django.contrib import admin
-from crm.models import Flight, Plane
+from crm.models import Flight, Plane, Ticket
 
 
 class FlightAdmin(admin.ModelAdmin):
@@ -36,3 +36,12 @@ class PlaneAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 admin.site.register(Plane, PlaneAdmin)
+
+
+class TicketAdmin(admin.ModelAdmin):
+    fields = [
+        'user',
+        'flight'
+    ]
+
+admin.site.register(Ticket, TicketAdmin)

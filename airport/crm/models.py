@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 from crm import utils
 
@@ -40,6 +41,9 @@ class Flight(models.Model):
     def get_absolute_url(self):
         return reverse('flight_details_url', kwargs={'slug': self.slug})
 
+    def get_create_ticket_url(self):
+        return reverse('flight_ticket_url', kwargs={'slug': self.slug})
+
     def __str__(self):
         return self.flight_id
 
@@ -53,3 +57,11 @@ class Plane(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Ticket(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    flight = models.ForeignKey('Flight', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} - {}".format(self.user.username, self.flight.flight_id)
