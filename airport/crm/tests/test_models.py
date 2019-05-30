@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from crm.models import Flight, Plane
+from crm.models import Flight, Plane, Ticket
+from django.contrib.auth.models import User
 
 
 class FlightModelTestCase(TestCase):
@@ -99,10 +100,16 @@ class FlightModelTestCase(TestCase):
         null = self.flight._meta.get_field('slug').null
         self.assertEqual(null, False)
 
-    def test_slug_get_absolute_url(self):
+    def test_get_absolute_url(self):
         self.assertEqual(
             self.flight.get_absolute_url(),
-            '/flight/{0}/'.format(self.flight.slug)
+            '/flight/{}/'.format(self.flight.slug)
+        )
+
+    def test_get_create_ticket_url(self):
+        self.assertEqual(
+            self.flight.get_create_ticket_url(),
+            '/flight/{}/ticket/create/'.format(self.flight.slug)
         )
 
     def test_slug__str__(self):
@@ -121,3 +128,28 @@ class PlaneModelTestCase(TestCase):
     def test_seats_default(self):
         default = self.plane._meta.get_field('seats').default
         self.assertEqual(default, 120)
+
+    def test__str__(self):
+        self.assertEqual(self.plane.__str__(), self.plane.name)
+
+
+class TicketModelTestCase(TestCase):
+
+    def setUp(self):
+        self.plane = Plane.objects.create(name="A333")
+        self.flight = Flight.objects.create(
+            departure_time = timezone.now(),
+            flight_id = "AV 2341",
+            country = "Russia",
+            city = "Moscow",
+            arrival_time = timezone.now(),
+            company = "S7",
+            plane_name = self.plane,
+            status = "Registration"
+        )
+        self.user = User.objects.create_user(username="someone", password="111")
+        self.ticket = Ticket.objects.create(user=self.user, flight=self.flight)
+
+    def test_flight_related_model(self):
+        related_model = self.ticket._meta.get_field('flight').related_model
+        self.assertEqual(related_model, Flight)
