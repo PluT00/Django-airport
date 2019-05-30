@@ -46,8 +46,27 @@
       <div class="col">Status:</div>
       <div class="col">{{ flight.status }}</div>
     </div>
+    <hr>
     <div class="row">
-      <div class="col"><a href="#" class="btn btn-outline-info">Book a ticket</a></div>
+      <div class="col">Free seats:</div>
+      <div class="col">{{ free_seats }} / {{ seats }}</div>
     </div>
-  </div>
+
+    <hr>
+    <div class="row mx-auto">
+      <div class="col">
+        <a href="{{ flight.get_create_ticket_url }}" class="btn btn-outline-info {% if free_seats == 0 %} disabled {% endif %} {% if not user.is_authenticated %} disabled {% endif %} ">
+          Book a ticket
+        </a>
+      </div>
+    </div>
+    <div class="row mt-2">
+      {% if not user.is_authenticated %}
+        <div class="col">
+          <a href="#">Login</a> or
+          <a href="#">Register</a>
+          to book a ticket.
+        </div>
+      {% endif %}
+    </div>
 {% endblock %}
