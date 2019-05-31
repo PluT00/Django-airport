@@ -43,6 +43,9 @@ class Flight(models.Model):
     def get_create_ticket_url(self):
         return reverse('flight_ticket_url', kwargs={'slug': self.slug})
 
+    def get_delete_ticket_url(self):
+        return reverse('flight_ticket_delete_url', kwargs={'slug':self.slug})
+
     def __str__(self):
         return self.flight_id
 

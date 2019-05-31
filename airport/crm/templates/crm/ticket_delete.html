@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Delete your {{ flight.flight_id }} ticket | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <form action="{{ flight.get_delete_ticket_url }}" method="post">
+    {% csrf_token %}
+
+    <p>{{ user.username|title }}, are you sure to delete a ticket to flight {{ flight.flight_id }}?</p>
+    <button class="btn btn-outline-danger ml-1" type="submit">Delete</button>
+  </form>
+{% endblock %}
