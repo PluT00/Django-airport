@@ -78,8 +78,8 @@ class FlightTicketDelete(View):
     def post(self, request, slug):
         user=self.request.user
         flight = Flight.objects.get(slug=slug)
-        ticket = Ticket.objects.get(flight=flight, user=user)
-        ticket.delete()
+        tickets = Ticket.objects.filter(flight=flight, user=user)
+        tickets[0].delete()
         return redirect('flights_list_url')
 
 
