@@ -6,10 +6,14 @@
 {% endblock %}
 
 {% block content %}
-  <form action="{{ flight.get_delete_ticket_url }}" method="post">
-    {% csrf_token %}
+  {% if user.is_authenticated %}
+    <form action="{{ flight.get_delete_ticket_url }}" method="post">
+      {% csrf_token %}
 
-    <p>{{ user.username|title }}, are you sure to delete a ticket to flight {{ flight.flight_id }}?</p>
-    <button class="btn btn-outline-danger ml-1" type="submit">Delete</button>
-  </form>
+      <p>{{ user.username|title }}, are you sure to delete a ticket to flight {{ flight.flight_id }}?</p>
+      <button class="btn btn-outline-danger ml-1" type="submit">Delete</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'signup' %}">Register</a> to book a ticket.</p>
+  {% endif %}
 {% endblock %}

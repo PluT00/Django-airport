@@ -86,19 +86,22 @@ class FlightTicketDelete(View):
 class MyTickets(View):
 
     def get(self, request):
-        tickets = Ticket.objects.filter(user=self.request.user)
-        arrivals = []
-        departures = []
-        for ticket in tickets:
-            if ticket.flight.is_departure:
-                departures.append(ticket)
-            else:
-                arrivals.append(ticket)
-        return render(
-            request,
-            'crm/my_tickets.html',
-            context={
-                'departures': departures,
-                'arrivals': arrivals
-            }
-        )
+        if self.request.user.is_authenticated:
+            tickets = Ticket.objects.filter(user=self.request.user)
+            arrivals = []
+            departures = []
+            for ticket in tickets:
+                if ticket.flight.is_departure:
+                    departures.append(ticket)
+                else:
+                    arrivals.append(ticket)
+            return render(
+                request,
+                'crm/my_tickets.html',
+                context={
+                    'departures': departures,
+                    'arrivals': arrivals
+                }
+            )
+        else:
+            return render(request, 'crm/my_tickets.html')
