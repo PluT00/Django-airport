@@ -2,8 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
-from crm import utils
-
 
 class Flight(models.Model):
     STATUS_CHOISES = (
