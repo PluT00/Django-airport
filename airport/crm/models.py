@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.utils.text import slugify
 
 
 class Flight(models.Model):
@@ -32,7 +33,7 @@ class Flight(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.slug = utils.gen_slug(self.flight_id)
+            self.slug = slugify(self.flight_id)
         super().save(*args, **kwargs)
 
 
