@@ -28,9 +28,11 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'flights_list_url' %}" title="Main page">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a href="{% url 'my_tickets_url' %}" class="nav-link">My tickets</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="{% url 'my_tickets_url' %}" class="nav-link">My tickets</a>
+            </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto">
           {% if not user.is_authenticated %}
