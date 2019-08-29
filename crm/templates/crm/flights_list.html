@@ -42,7 +42,7 @@
     <div class="tab-pane fade" id="pills-arrivals" role="tabpanel" aria-labelledby="pills-arrivals-tab">
       <table class="table">
         <thead>
-          <th scope="col">Departure time</th>
+          <th scope="col">Arrival time</th>
           <th scope="col">Id</th>
           <th scope="col">City</th>
           <th scope="col">Plane</th>
@@ -52,7 +52,7 @@
         <tbody>
           {% for flight in arrivals %}
             <tr>
-              <td>{{ flight.departure_time }}</td>
+              <td>{{ flight.arrival_time }}</td>
               <td>{{ flight.flight_id }}</td>
               <td>{{ flight.city }}</td>
               <td>{{ flight.plane_name }}</td>
