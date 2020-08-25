@@ -154,7 +154,7 @@ class TicketModelTestCase(TestCase):
             plane_name = self.plane,
             status = "Registration"
         )
-        self.user = User.objects.create_user(username="someone", password="111")
+        self.user = User.objects.create_user(username="testuser", password="111")
         self.ticket = Ticket.objects.create(user=self.user, flight=self.flight)
 
     def test_flight_related_model(self):
