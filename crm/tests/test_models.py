@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from crm.models import Flight, Plane, Ticket
@@ -103,13 +104,19 @@ class FlightModelTestCase(TestCase):
     def test_get_absolute_url(self):
         self.assertEqual(
             self.flight.get_absolute_url(),
-            '/flight/{}/'.format(self.flight.slug)
+            reverse('flight_details_url', kwargs={'slug': self.flight.slug})
         )
 
     def test_get_create_ticket_url(self):
         self.assertEqual(
             self.flight.get_create_ticket_url(),
-            '/flight/{}/ticket/create/'.format(self.flight.slug)
+            reverse('flight_ticket_url', kwargs={'slug': self.flight.slug})
+        )
+
+    def test_get_delete_ticket_url(self):
+        self.assertEqual(
+            self.flight.get_delete_ticket_url(),
+            reverse('flight_ticket_delete_url', kwargs={'slug':self.flight.slug})
         )
 
     def test_slug__str__(self):
@@ -153,3 +160,12 @@ class TicketModelTestCase(TestCase):
     def test_flight_related_model(self):
         related_model = self.ticket._meta.get_field('flight').related_model
         self.assertEqual(related_model, Flight)
+
+    def test__str__(self):
+        self.assertEqual(
+            self.ticket.__str__(),
+            "{} - {}".format(
+                self.ticket.user.username,
+                self.ticket.flight.flight_id
+            )
+        )
