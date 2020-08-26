@@ -4,17 +4,12 @@ from django.shortcuts import get_object_or_404
 from django.views import View
 
 from crm.models import Flight, Ticket
+from crm import services
 
 
 def flights_list(request):
-    arrivals = []
-    departures = []
-    flights = Flight.objects.all()
-    for flight in flights:
-        if flight.is_departure:
-            departures.append(flight)
-        else:
-            arrivals.append(flight)
+    arrivals, departures = services.\
+        get_arrivals_and_departures_from_flights_list()
     return render(request,
         'crm/flights_list.html',
         context={
@@ -25,9 +20,7 @@ def flights_list(request):
 
 
 def flight_details(request, slug):
-    flight = get_object_or_404(Flight, slug=slug)
-    tickets = Ticket.objects.filter(flight=flight).count()
-    free_seats = flight.plane_name.seats - tickets
+    flight, free_seats = services.get_flight_and_free_seats(slug)
     return render(request,
         'crm/flight_details.html',
         context={
@@ -51,15 +44,7 @@ class FlightTicket(View):
         )
 
     def post(self, request, slug):
-        current_flight = Flight.objects.get(slug=slug)
-        current_user = self.request.user
-        tickets = Ticket.objects.filter(flight=current_flight).count()
-        seats = current_flight.plane_name.seats
-        if tickets < seats:
-            new_ticket = Ticket.objects.create(
-                user=current_user,
-                flight=current_flight
-            )
+        services.check_for_free_seats_and_post_ticket(self.request.user, slug)
         return redirect('flights_list_url')
 
 
@@ -76,10 +61,10 @@ class FlightTicketDelete(View):
         )
 
     def post(self, request, slug):
-        user=self.request.user
-        flight = Flight.objects.get(slug=slug)
-        tickets = Ticket.objects.filter(flight=flight, user=user)
-        tickets[0].delete()
+        services.delete_ticket_for_current_user_and_flight(
+            self.request.user,
+            slug
+        )
         return redirect('flights_list_url')
 
 
@@ -87,14 +72,8 @@ class MyTickets(View):
 
     def get(self, request):
         if self.request.user.is_authenticated:
-            tickets = Ticket.objects.filter(user=self.request.user)
-            arrivals = []
-            departures = []
-            for ticket in tickets:
-                if ticket.flight.is_departure:
-                    departures.append(ticket)
-                else:
-                    arrivals.append(ticket)
+            arrivals, departures = services.\
+                get_arrivals_and_departures_from_tickets_list(self.request.user)
             return render(
                 request,
                 'crm/my_tickets.html',
@@ -104,4 +83,4 @@ class MyTickets(View):
                 }
             )
         else:
-            return render(request, 'crm/my_tickets.html')
+            return render(request, '404.html')
