@@ -23,7 +23,7 @@ def get_flight_and_free_seats(slug):
     return flight, free_seats
 
 def check_for_free_seats_and_post_ticket(current_user, slug):
-    current_flight = Flight.objects.get(slug=slug)
+    current_flight = get_object_or_404(Flight, slug=slug)
     tickets = Ticket.objects.filter(flight=current_flight).count()
     seats = current_flight.plane_name.seats
     if tickets < seats:
@@ -34,7 +34,7 @@ def check_for_free_seats_and_post_ticket(current_user, slug):
 
 def delete_ticket_for_current_user_and_flight(current_user, slug):
     current_user=current_user
-    current_flight = Flight.objects.get(slug=slug)
+    current_flight = get_object_or_404(Flight, slug=slug)
     tickets = Ticket.objects.filter(flight=current_flight, user=current_user)
     tickets[0].delete()
 

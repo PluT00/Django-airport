@@ -36,6 +36,7 @@ class FlightServicesTestCase(TestCase):
     def test_get_arrivals_and_departures_from_flights_list(self):
         arrivals, departures = services.\
             get_arrivals_and_departures_from_flights_list()
+
         self.assertEqual(arrivals[0], self.arrival)
         self.assertEqual(departures[0], self.departure)
 
@@ -46,6 +47,7 @@ class FlightServicesTestCase(TestCase):
             flight=self.arrival
         )
         flight, free_seats = services.get_flight_and_free_seats(self.arrival.slug)
+
         self.assertEqual(flight, self.arrival)
         self.assertEqual(free_seats, 119)
 
@@ -94,6 +96,7 @@ class TicketServicesTestCase(TestCase):
             self.arrival.slug
         )
         posted_ticket = Ticket.objects.all()[2]
+
         self.assertEqual(posted_ticket.user, self.user)
         self.assertEqual(posted_ticket.flight, self.arrival)
 
@@ -103,10 +106,12 @@ class TicketServicesTestCase(TestCase):
             self.arrival.slug
         )
         tickets_count = Ticket.objects.all().count()
+
         self.assertEqual(tickets_count, 1)
 
     def test_get_arrivals_and_departures_from_tickets_list(self):
         arrivals, departures = services.\
             get_arrivals_and_departures_from_tickets_list(self.user)
+            
         self.assertEqual(arrivals[0], self.arrival_ticket)
         self.assertEqual(departures[0], self.departure_ticket)
