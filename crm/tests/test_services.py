@@ -1,10 +1,9 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
 
-from django.contrib.auth.models import User
-
-from crm.models import Flight, Plane, Ticket
 from crm import services
+from crm.models import Flight, Plane, Ticket
 
 
 class FlightServicesTestCase(TestCase):
@@ -112,6 +111,6 @@ class TicketServicesTestCase(TestCase):
     def test_get_arrivals_and_departures_from_tickets_list(self):
         arrivals, departures = services.\
             get_arrivals_and_departures_from_tickets_list(self.user)
-            
+
         self.assertEqual(arrivals[0], self.arrival_ticket)
         self.assertEqual(departures[0], self.departure_ticket)

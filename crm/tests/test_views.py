@@ -1,10 +1,9 @@
-from django.test import TestCase, Client
+from django.contrib.auth.models import User
+from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from django.contrib.auth.models import User
-
-from crm.models import Plane, Flight, Ticket
+from crm.models import Flight, Plane, Ticket
 
 
 class FlightViewsTestCase(TestCase):

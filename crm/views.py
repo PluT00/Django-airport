@@ -1,11 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404
-from django.views import View
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
 
-from crm.models import Flight, Ticket
 from crm import services
+from crm.models import Flight, Ticket
 
 
 def flights_list(request):
